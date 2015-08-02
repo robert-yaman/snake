@@ -1,32 +1,52 @@
 (function () {
 
-window.Game = function($el, canvas) {
+var Game = window.Game = window.Game || {};
+
+
+var Play = Game.Play = function($el) {
   this.$el = $el;
-  this.canvas = canvas;
   this.board = new Game.Board(this.$el);
   this.configureKeys();
   this.run();
 };
 
-var Game = window.Game;
-
-Game.prototype.run = function () {
+Play.prototype.run = function () {
   game = this;
-  setInterval(function () {
+  this.loop = setInterval(function () {
     game.adjust();
     game.render();
   }, 1000 / Game.Config.fps);
 };
 
-Game.prototype.adjust = function () {
+Play.prototype.adjust = function () {
   this.board.adjust();
+  this.checkForLoss();
 };
 
-Game.prototype.render = function () {
+Play.prototype.checkForLoss = function () {
+  if (this.board.snake.eatingSelf() || this.offBoard(this.board.snake.headPos)) {
+    alert("LOSER HAHAHAH")
+    this.reset();
+  }
+};
+
+Play.prototype.reset = function () {
+  this.$el.children().remove();
+  clearInterval(this.loop);
+  new Game.Play(this.$el)
+};
+
+Play.prototype.offBoard = function (coord) {
+  return coord.pos[0] < 0 || coord.pos[1] < 0 ||
+  coord.pos[0] > Game.Config.boardWidth ||
+  coord.pos[1] > Game.Config.boardHeight;
+};
+
+Play.prototype.render = function () {
   this.board.render(this.$el);
 };
 
-Game.prototype.configureKeys = function () {
+Play.prototype.configureKeys = function () {
   game = this;
   key('w', function () { game.changeDir(new Game.Coord(0, -1)); } );
   key('a', function () { game.changeDir(new Game.Coord(-1, 0)); });
@@ -34,7 +54,7 @@ Game.prototype.configureKeys = function () {
   key('d', function () { game.changeDir(new Game.Coord(1, 0)); });
 };
 
-Game.prototype.changeDir = function (dir) {
+Play.prototype.changeDir = function (dir) {
   //TODO: queue of moves to facilitate quick successive moves
   game.board.snake.changeDir(dir);
 };
