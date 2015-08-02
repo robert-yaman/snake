@@ -3,6 +3,12 @@
   top:40px;
   margin: 0 auto;
   width: 832px;
+  opacity: 1;
+  transition: opacity 500ms;
+}
+
+.snake.paused {
+  opacity: 0.3;
 }
 
 .snake:after {

@@ -48,9 +48,11 @@ Play.prototype.render = function () {
 
 Play.prototype.togglePause = function () {
   if (this.paused) {
+    this.$el.removeClass("paused")
     this.run();
     this.paused = false;
   } else {
+    this.$el.addClass("paused")
     clearInterval(this.loop);
     this.paused = true;
   }
@@ -62,7 +64,7 @@ Play.prototype.configureKeys = function () {
   key('a', function () { game.changeDir(new Game.Coord(-1, 0)); });
   key('s', function () { game.changeDir(new Game.Coord(0, 1)); });
   key('d', function () { game.changeDir(new Game.Coord(1, 0)); });
-  key('space', function () {game.togglePause()});
+  key('p', function () {game.togglePause()});
 };
 
 Play.prototype.changeDir = function (dir) {
