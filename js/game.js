@@ -1,9 +1,9 @@
 (function () {
 
-window.Game = function(el, canvas) {
-  this.el = el;
+window.Game = function($el, canvas) {
+  this.$el = $el;
   this.canvas = canvas;
-  this.board = new Game.Board(this.el);
+  this.board = new Game.Board(this.$el);
   this.configureKeys();
   this.run();
 };
@@ -23,7 +23,7 @@ Game.prototype.adjust = function () {
 };
 
 Game.prototype.render = function () {
-  this.board.render(this.el);
+  this.board.render(this.$el);
 };
 
 Game.prototype.configureKeys = function () {

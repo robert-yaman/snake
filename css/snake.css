@@ -1,0 +1,29 @@
+.snake {
+  position: relative;
+  top:40px;
+  margin: 0 auto;
+  width: 800px;
+}
+
+.snake:after {
+  content: " ";
+  display: block;
+  clear: both;
+}
+
+.square {
+  float: left;
+  background-color: #ccc;
+  width: 14px;
+  height: 14px;
+  margin: 1px;
+  border-radius: 4px;
+}
+
+.square.apple {
+  background-color: green;
+}
+
+.square.on {
+  background-color: red;
+}

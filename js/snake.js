@@ -6,7 +6,6 @@ Game.Snake = function() {
   this.headPos = new Coord(1,1);
   this.currentDir = new Coord(0,1);
   this.segments = [this.headPos, new Coord(2,1), new Coord(3,1)];
-  this.buildSegments();
 };
 
 var Snake = Game.Snake;
@@ -23,10 +22,6 @@ Coord.prototype.eq = function (otherCoord) {
 
 Coord.prototype.plus = function (otherCoord) {
   return new Coord(this.pos[0] + otherCoord.pos[0], this.pos[1] + otherCoord.pos[1]);
-};
-
-Snake.prototype.buildSegments = function() {
-  //
 };
 
 Snake.prototype.move = function () {
