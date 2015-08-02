@@ -2,7 +2,7 @@
   position: relative;
   top:40px;
   margin: 0 auto;
-  width: 800px;
+  width: 832px;
 }
 
 .snake:after {
@@ -13,7 +13,7 @@
 
 .square {
   float: left;
-  background-color: #ccc;
+  background-color: white;
   width: 14px;
   height: 14px;
   margin: 1px;
@@ -26,4 +26,67 @@
 
 .square.on {
   background-color: red;
+}
+
+.stopper {
+  float: left;
+  width: 16px;
+  height: 16px;
+  transition: 300ms;
+}
+
+.stopper.left {
+  width: 15px;
+  height: 16px;
+  border-right: 1px solid white;
+}
+
+.stopper.active.left {
+  border-right: 1px solid black;
+}
+
+.stopper.right {
+  width: 15px;
+  height: 16px;
+  border-left: 1px solid white;
+}
+
+.stopper.active.right {
+  border-left: 1px solid black;
+}
+
+.stopper.top {
+  width: 16px;
+  height: 15px;
+  border-bottom: 1px solid white;
+}
+
+.stopper.active.top {
+  border-bottom: 1px solid black;
+}
+
+.stopper.bottom {
+  width: 16px;
+  height: 15px;
+  border-top: 1px solid white;
+}
+
+.stopper.active.bottom {
+  border-top: 1px solid black;
+}
+
+.stopper.subactive.left {
+  border-right: 1px solid #ccc;
+}
+
+.stopper.subactive.right {
+  border-left: 1px solid #ccc;
+}
+
+.stopper.subactive.top {
+  border-bottom: 1px solid #ccc;
+}
+
+.stopper.subactive.bottom {
+  border-top: 1px solid #ccc;
 }

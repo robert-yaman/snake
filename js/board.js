@@ -13,17 +13,75 @@ Game.Board = function($el) {
 var Board = Game.Board;
 
 Board.prototype.makeGrid = function () {
-  for (var i = 0; i < Game.Config.boardWidth; i++) {
-    for (var j = 0; j < Game.Config.boardHeight; j++) {
+  //corner stopper
+  var $stopper = $('<div>');
+  $stopper.attr("row", -1);
+  $stopper.attr("col", -1);
+  $stopper.addClass("stopper corner");
+  this.$el.append($stopper);
+
+  //top stoppers
+  for (var j = 0; j < Game.Config.boardWidth; j++) {
+    var $stopper = $('<div>');
+    $stopper.attr("row", -1);
+    $stopper.attr("col", j);
+    $stopper.addClass("stopper top");
+    this.$el.append($stopper);
+  }
+
+  //corder
+  var $stopper = $('<div>');
+  $stopper.attr("row", Game.Config.boardWidth);
+  $stopper.attr("col", -1);
+  $stopper.addClass("stopper corner");
+  this.$el.append($stopper);
+
+  //main loop
+  for (var i = 0; i < Game.Config.boardHeight; i++) {
+    var $stopper = $('<div>');
+    $stopper.attr("row", i);
+    $stopper.attr("col", -1);
+    $stopper.addClass("stopper left");
+    this.$el.append($stopper);
+
+    for (var j = 0; j < Game.Config.boardWidth; j++) {
       var $div = $('<div>');
       $div.attr("row", i);
       $div.attr("col", j);
       $div.addClass("square");
       this.$el.append($div);
-      this.divs.push($div)
-      // this.grid.push(new Game.Coord(i, j));
+      this.divs.push($div);
     }
+
+    var $stopper = $('<div>');
+    $stopper.attr("row", i);
+    $stopper.attr("col", Game.Config.boardWidth);
+    $stopper.addClass("stopper right");
+    this.$el.append($stopper);
   }
+
+  //corner
+  var $stopper = $('<div>');
+  $stopper.attr("row", -1);
+  $stopper.attr("col", Game.Config.boardHeight);
+  $stopper.addClass("stopper corner");
+  this.$el.append($stopper);
+
+  //bottom stoppers
+  for (var j = 0; j < Game.Config.boardWidth; j++) {
+    var $stopper = $('<div>');
+    $stopper.attr("row", Game.Config.boardHeight);
+    $stopper.attr("col", j);
+    $stopper.addClass("stopper bottom");
+    this.$el.append($stopper);
+  }
+
+  //corner
+  var $stopper = $('<div>');
+  $stopper.attr("row", Game.Config.boardWidth);
+  $stopper.attr("col", Game.Config.boardHeight);
+  $stopper.addClass("stopper corner");
+  this.$el.append($stopper);
 };
 
 Board.prototype.makeApples = function () {
@@ -32,7 +90,7 @@ Board.prototype.makeApples = function () {
     var appleRow = Math.floor(Math.random() * Game.Config.boardWidth);
     var appleCol = Math.floor(Math.random() * Game.Config.boardHeight);
     this.apples.push(new Game.Coord(appleRow, appleCol));
-  };
+  } // make sure not to make apples where the snake is?
 };
 
 Board.prototype.inApples = function (coord) {
@@ -67,9 +125,47 @@ Board.prototype.checkForEating = function () {
   }
 };
 
+Board.prototype.adjustBorders = function () {
+  $(".stopper").removeClass("active");
+  $(".stopper").removeClass("subactive")
+
+  var snakePos = this.snake.headPos.pos;
+
+  if (snakePos[0] < 4) {
+    this.activate(-1, snakePos[1]);
+  }
+
+  if (snakePos[1] < 4) {
+    this.activate(snakePos[0], -1);
+  }
+
+  if (snakePos[0] >= Game.Config.boardWidth - 4) {
+    this.activate(Game.Config.boardWidth, snakePos[1]);
+  }
+
+  if (snakePos[1] >= Game.Config.boardHeight - 4) {
+    this.activate(snakePos[0], Game.Config.boardHeight);
+  }
+};
+
+Board.prototype.activate = function (col, row) {
+  var $div = $("div[row=" + String(row) + "][col=" + String(col) + "]");
+  $div.addClass("active");
+
+  var $subdiv1 = $("div[row=" + String(row + 1) + "][col=" + String(col) + "]");
+  $subdiv1.addClass("subactive");
+  var $subdiv2 = $("div[row=" + String(row - 1) + "][col=" + String(col) + "]");
+  $subdiv2.addClass("subactive");
+  var $subdiv3 = $("div[row=" + String(row) + "][col=" + String(col - 1) + "]");
+  $subdiv3.addClass("subactive");
+  var $subdiv4 = $("div[row=" + String(row) + "][col=" + String(col + 1) + "]");
+  $subdiv4.addClass("subactive");
+};
+
 Board.prototype.adjust = function () {
   this.makeApples();
   this.snake.move();
+  this.adjustBorders();
   this.checkForEating();
 };
 
