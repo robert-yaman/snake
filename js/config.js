@@ -6,7 +6,7 @@ Game.Config = {
   boardHeight: 35,
   boardWidth: 50,
   fps: 6,
-  appleFrequency: 15
+  appleFrequency: 20
 };
 
 })();

@@ -57,9 +57,20 @@ Board.prototype.render = function ($el) {
   }
 };
 
+Board.prototype.checkForEating = function () {
+  var snakeHead = this.snake.headPos;
+  for (var i = 0; i < this.apples.length; i++) {
+    if (snakeHead.eq(this.apples[i])) {
+      this.apples.splice(i,1);
+      this.snake.chow();
+    }
+  }
+};
+
 Board.prototype.adjust = function () {
   this.makeApples();
   this.snake.move();
+  this.checkForEating();
 };
 
 })();

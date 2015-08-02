@@ -27,8 +27,10 @@ Coord.prototype.plus = function (otherCoord) {
 Snake.prototype.move = function () {
   this.headPos = this.headPos.plus(this.currentDir);
   this.segments.unshift(this.headPos);
-  this.segments.pop();
+  if (!this.chowing) this.segments.pop();
+  this.chowing = false;
 };
+
 
 Snake.prototype.changeDirs = function (newDir) {
   var matched = false;
@@ -38,6 +40,10 @@ Snake.prototype.changeDirs = function (newDir) {
   if (!matched) throw "Invalid dir";
 
   this.currentDir = newDir;
+};
+
+Snake.prototype.chow = function () {
+  this.chowing = true;
 };
 
 Snake.prototype.length = function () {
