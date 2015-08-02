@@ -61,6 +61,13 @@ Snake.prototype.on = function (coord) {
   return false;
 };
 
+Snake.prototype.eatingSelf = function () {
+  for (var i = 1; i < this.length(); i++) {
+    if (this.segments[i].eq(this.headPos)) return true;
+  }
+  return false;
+};
+
 Snake.prototype.changeDir = function (dir) {
   if (!dir.inverse(this.currentDir)) {
     this.currentDir = new Coord(dir.pos[0], dir.pos[1]);

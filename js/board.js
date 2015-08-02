@@ -67,9 +67,22 @@ Board.prototype.checkForEating = function () {
   }
 };
 
+Board.prototype.checkForLoss = function () {
+  if (this.snake.eatingSelf() || this.offBoard(this.snake.headPos)) {
+    alert("LOSER");
+  }
+};
+
+Board.prototype.offBoard = function (coord) {
+  return coord.pos[0] < 0 || coord.pos[1] < 0 ||
+  coord.pos[0] > Game.Config.boardWidth ||
+  coord.pos[1] > Game.Config.boardHeight;
+};
+
 Board.prototype.adjust = function () {
   this.makeApples();
   this.snake.move();
+  this.checkForLoss();
   this.checkForEating();
 };
 
