@@ -21,12 +21,21 @@ Play.prototype.run = function () {
 Play.prototype.adjust = function () {
   this.board.adjust();
   this.checkForLoss();
+  this.adjustCounter();
+};
+
+Play.prototype.adjustCounter = function () {
+  $(".counter").html(this.board.snake.length())
 };
 
 Play.prototype.checkForLoss = function () {
   if (this.board.snake.eatingSelf() || this.offBoard(this.board.snake.headPos)) {
-    alert("LOSER HAHAHAH");
-    this.reset();
+    this.togglePause();
+    var play = this;
+    setTimeout(function () {
+      play.togglePause();
+      play.reset();
+    }, 2000);
   }
 };
 
@@ -48,11 +57,11 @@ Play.prototype.render = function () {
 
 Play.prototype.togglePause = function () {
   if (this.paused) {
-    this.$el.removeClass("paused")
+    this.$el.removeClass("paused");
     this.run();
     this.paused = false;
   } else {
-    this.$el.addClass("paused")
+    this.$el.addClass("paused");
     clearInterval(this.loop);
     this.paused = true;
   }

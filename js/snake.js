@@ -35,17 +35,6 @@ Snake.prototype.move = function () {
   this.chowing = false;
 };
 
-
-// Snake.prototype.changeDirs = function (newDir) {
-//   var matched = false;
-//   for (var i = 0; i < Game.DIRS.length; i++) {
-//     if (Game.DIRS[i].eq(newDir)) matched = true;
-//   }
-//   if (!matched) throw "Invalid dir";
-//
-//   this.currentDir = newDir;
-// };
-
 Snake.prototype.chow = function () {
   this.chowing = true;
 };

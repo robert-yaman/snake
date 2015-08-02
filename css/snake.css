@@ -1,6 +1,25 @@
-.snake {
+.info {
   position: relative;
-  top:40px;
+  top: 60px;
+  color: #ccc;
+  font-family: 'Roboto', sans-serif;
+  font-weight: lighter;
+}
+
+.info ul {
+  list-style: none;
+}
+
+.info .counter {
+  position: relative;
+  top: 450px;
+  left: 38px;
+}
+
+.snake {
+  margin: 0;
+  position: relative;
+  top: -20px;
   margin: 0 auto;
   width: 832px;
   opacity: 1;
