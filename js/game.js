@@ -28,10 +28,10 @@ Game.prototype.render = function () {
 
 Game.prototype.configureKeys = function () {
   game = this;
-  key('w', function () { game.changeDir([0, -1]); } );
-  key('a', function () { game.changeDir([-1, 0]); });
-  key('s', function () { game.changeDir([0, 1]); });
-  key('d', function () { game.changeDir([1, 0]); });
+  key('w', function () { game.changeDir(new Game.Coord(0, -1)); } );
+  key('a', function () { game.changeDir(new Game.Coord(-1, 0)); });
+  key('s', function () { game.changeDir(new Game.Coord(0, 1)); });
+  key('d', function () { game.changeDir(new Game.Coord(1, 0)); });
 };
 
 Game.prototype.changeDir = function (dir) {

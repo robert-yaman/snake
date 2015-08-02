@@ -24,6 +24,10 @@ Coord.prototype.plus = function (otherCoord) {
   return new Coord(this.pos[0] + otherCoord.pos[0], this.pos[1] + otherCoord.pos[1]);
 };
 
+Coord.prototype.inverse = function (otherCoord) {
+  return this.pos[0] === -1 * otherCoord.pos[0] && this.pos[1] === -1 * otherCoord.pos[1];
+};
+
 Snake.prototype.move = function () {
   this.headPos = this.headPos.plus(this.currentDir);
   this.segments.unshift(this.headPos);
@@ -32,15 +36,15 @@ Snake.prototype.move = function () {
 };
 
 
-Snake.prototype.changeDirs = function (newDir) {
-  var matched = false;
-  for (var i = 0; i < Game.DIRS.length; i++) {
-    if (Game.DIRS[i].eq(newDir)) matched = true;
-  }
-  if (!matched) throw "Invalid dir";
-
-  this.currentDir = newDir;
-};
+// Snake.prototype.changeDirs = function (newDir) {
+//   var matched = false;
+//   for (var i = 0; i < Game.DIRS.length; i++) {
+//     if (Game.DIRS[i].eq(newDir)) matched = true;
+//   }
+//   if (!matched) throw "Invalid dir";
+//
+//   this.currentDir = newDir;
+// };
 
 Snake.prototype.chow = function () {
   this.chowing = true;
@@ -58,7 +62,10 @@ Snake.prototype.on = function (coord) {
 };
 
 Snake.prototype.changeDir = function (dir) {
-  this.currentDir = new Coord(dir[0], dir[1]);
+  if (!dir.inverse(this.currentDir)) {
+    this.currentDir = new Coord(dir.pos[0], dir.pos[1]);
+  }
+
 };
 
 })();
