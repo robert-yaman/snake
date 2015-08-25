@@ -129,7 +129,7 @@ Board.prototype.checkForEating = function () {
 
 Board.prototype.adjustBorders = function () {
   $(".stopper").removeClass("active");
-  $(".stopper").removeClass("subactive")
+  $(".stopper").removeClass("subactive");
 
   var snakePos = this.snake.headPos.pos;
 

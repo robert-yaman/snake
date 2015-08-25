@@ -30,7 +30,7 @@ Play.prototype.adjustCounter = function () {
 };
 
 Play.prototype.checkForLoss = function () {
-  if (this.board.snake.eatingSelf() || this.offBoard(this.board.snake.headPos)) {
+  if (this.board.snake.eatingSelf() || this.offBoard(this.board.snake.nextHeadPos())) {
     this.togglePause();
     var play = this;
     setTimeout(function () {

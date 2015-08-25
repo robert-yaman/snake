@@ -28,19 +28,33 @@ Coord.prototype.inverse = function (otherCoord) {
   return this.pos[0] === -1 * otherCoord.pos[0] && this.pos[1] === -1 * otherCoord.pos[1];
 };
 
-Snake.prototype.move = function () {
-  this.headPos = this.headPos.plus(this.currentDir);
-  this.segments.unshift(this.headPos);
-  if (!this.chowing) this.segments.pop();
-  this.chowing = false;
+
+Snake.prototype.changeDir = function (dir) {
+  if (!dir.inverse(this.currentDir)) {
+    this.currentDir = new Coord(dir.pos[0], dir.pos[1]);
+  }
 };
 
 Snake.prototype.chow = function () {
   this.chowing = true;
 };
 
+Snake.prototype.eatingSelf = function () {
+  for (var i = 1; i < this.length(); i++) {
+    if (this.segments[i].eq(this.nextHeadPos)) return true;
+  }
+  return false;
+};
+
 Snake.prototype.length = function () {
   return this.segments.length;
+};
+
+Snake.prototype.move = function () {
+  this.headPos = this.headPos.plus(this.currentDir);
+  this.segments.unshift(this.headPos);
+  if (!this.chowing) this.segments.pop();
+  this.chowing = false;
 };
 
 Snake.prototype.on = function (coord) {
@@ -50,18 +64,8 @@ Snake.prototype.on = function (coord) {
   return false;
 };
 
-Snake.prototype.eatingSelf = function () {
-  for (var i = 1; i < this.length(); i++) {
-    if (this.segments[i].eq(this.headPos)) return true;
-  }
-  return false;
-};
-
-Snake.prototype.changeDir = function (dir) {
-  if (!dir.inverse(this.currentDir)) {
-    this.currentDir = new Coord(dir.pos[0], dir.pos[1]);
-  }
-
+Snake.prototype.nextHeadPos = function () {
+  return this.headPos.plus(this.currentDir);
 };
 
 })();
