@@ -17,6 +17,12 @@
   left: 34px
 }
 
+.info .high-score {
+  position: absolute;
+  bottom: 32px;
+  right: 36px;
+}
+
 .snake {
   margin: 0;
   position: relative;

@@ -7,6 +7,12 @@ var Play = Game.Play = function($el, firstGame) {
   this.$el = $el;
   this.board = new Game.Board(this.$el);
   if (firstGame) this.configureKeys();
+
+  if (document.cookie) {
+    this.highScore = parseInt(document.cookie.match(/\d+/)[0]);
+  } else {
+    this.highScore = 3;
+  }
   this.run();
 };
 
@@ -27,19 +33,25 @@ Play.prototype.adjust = function () {
 
 Play.prototype.adjustCounter = function () {
   $(".current-score").html(this.board.snake.length());
-  // $(".high-score").html(Math.max, this.board.snake.length(), _highscore_)
+  $(".high-score").html(
+    "Top: " + Math.max(this.board.snake.length(), this.highScore)
+  );
 };
 
 Play.prototype.checkForLoss = function () {
-  if (this.board.snake.eatingSelf() || this.offBoard(this.board.snake.headPos)) {
-    this.lost = true;
-    this.togglePause();
-    var play = this;
-    setTimeout(function () {
-      play.togglePause();
-      play.reset();
-    }, 2000);
-  }
+  if (this.board.snake.eatingSelf() || this.offBoard(this.board.snake.headPos)) { this.lossSequence(); }
+};
+
+Play.prototype.lossSequence = function () {
+  this.lost = true;
+  this.togglePause();
+  document.cookie = "high_score=" +
+                        Math.max(this.board.snake.length(), this.highScore);
+  var play = this;
+  setTimeout(function () {
+    play.togglePause();
+    play.reset();
+  }, 2000);
 };
 
 Play.prototype.reset = function () {
