@@ -103,7 +103,7 @@ Board.prototype.introAnimation = function () {
       }
 
       counter++;
-  }, 2);
+  }, 1);
 };
 
 Board.prototype.lightUp = function ($element) {
