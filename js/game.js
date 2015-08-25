@@ -25,7 +25,8 @@ Play.prototype.adjust = function () {
 };
 
 Play.prototype.adjustCounter = function () {
-  $(".counter").html(this.board.snake.length())
+  $(".current-score").html(this.board.snake.length());
+  // $(".high-score").html(Math.max, this.board.snake.length(), _highscore_)
 };
 
 Play.prototype.checkForLoss = function () {

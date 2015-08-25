@@ -1,25 +1,26 @@
 .info {
-  position: relative;
-  top: 60px;
-  color: #ccc;
+  color: #2B2B2B;
   font-family: 'Roboto', sans-serif;
   font-weight: lighter;
 }
 
 .info ul {
+  z-index: -1;
+  position: absolute;
+  top: 16px;
   list-style: none;
 }
 
-.info .counter {
-  position: relative;
-  top: 450px;
-  left: 38px;
+.info .current-score {
+  position: absolute;
+  bottom: 32px;
+  left: 34px
 }
 
 .snake {
   margin: 0;
   position: relative;
-  top: -20px;
+  top: 48px;
   margin: 0 auto;
   width: 832px;
   opacity: 1;
@@ -38,7 +39,7 @@
 
 .square {
   float: left;
-  background-color: white;
+  background-color: transparent;
   width: 14px;
   height: 14px;
   margin: 1px;

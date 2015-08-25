@@ -89,8 +89,10 @@ Board.prototype.makeApples = function () {
   if (rand < 1 / Game.Config.appleFrequency) {
     var appleRow = Math.floor(Math.random() * Game.Config.boardWidth);
     var appleCol = Math.floor(Math.random() * Game.Config.boardHeight);
-    this.apples.push(new Game.Coord(appleRow, appleCol));
-  } // make sure not to make apples where the snake is?
+    var newAppleCoord = new Game.Coord(appleRow, appleCol);
+    if (this.snake.on(newAppleCoord)) return;
+    this.apples.push(newAppleCoord);
+  }
 };
 
 Board.prototype.inApples = function (coord) {
