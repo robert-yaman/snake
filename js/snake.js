@@ -41,8 +41,9 @@ Snake.prototype.chow = function () {
 
 Snake.prototype.eatingSelf = function () {
   for (var i = 1; i < this.length(); i++) {
-    if (this.segments[i].eq(this.nextHeadPos)) return true;
+    if (this.segments[i].eq(this.headPos)) return true;
   }
+
   return false;
 };
 
@@ -61,11 +62,12 @@ Snake.prototype.on = function (coord) {
   for (var i = 0; i < this.length(); i++) {
     if (this.segments[i].eq(coord)) return true;
   }
+
   return false;
 };
 
-Snake.prototype.nextHeadPos = function () {
-  return this.headPos.plus(this.currentDir);
-};
+// Snake.prototype.nextHeadPos = function () {
+//   return this.headPos.plus(this.currentDir);
+// };
 
 })();

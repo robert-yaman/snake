@@ -14,7 +14,9 @@ Play.prototype.run = function () {
   game = this;
   this.loop = setInterval(function () {
     game.adjust();
-    game.render();
+    if(!game.lost) {
+      game.render();
+    }
   }, 1000 / Game.Config.fps);
 };
 
@@ -30,18 +32,23 @@ Play.prototype.adjustCounter = function () {
 };
 
 Play.prototype.checkForLoss = function () {
-  if (this.board.snake.eatingSelf() || this.offBoard(this.board.snake.nextHeadPos())) {
+  if (this.board.snake.eatingSelf() || this.offBoard(this.board.snake.headPos)) {
+    this.lost = true;
     this.togglePause();
     var play = this;
     setTimeout(function () {
       play.togglePause();
+      //so new game doesn't start out paused
       play.reset();
     }, 2000);
   }
 };
 
 Play.prototype.reset = function () {
-  this.$el.children().remove();
+  //remove everything but the game info
+  this.$el.find(".stopper").remove();
+  this.$el.find(".square").remove();
+
   clearInterval(this.loop);
   new Game.Play(this.$el);
 };
@@ -74,7 +81,7 @@ Play.prototype.configureKeys = function () {
   key('a', function () { game.changeDir(new Game.Coord(-1, 0)); });
   key('s', function () { game.changeDir(new Game.Coord(0, 1)); });
   key('d', function () { game.changeDir(new Game.Coord(1, 0)); });
-  key('p', function () {game.togglePause()});
+  key('p', function () { game.togglePause()});
 };
 
 Play.prototype.changeDir = function (dir) {
