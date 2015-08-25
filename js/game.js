@@ -3,20 +3,19 @@
 var Game = window.Game = window.Game || {};
 
 
-var Play = Game.Play = function($el) {
+var Play = Game.Play = function($el, firstGame) {
   this.$el = $el;
   this.board = new Game.Board(this.$el);
-  this.configureKeys();
+  if (firstGame) this.configureKeys();
   this.run();
 };
 
 Play.prototype.run = function () {
+  Game.play = this;
   game = this;
   this.loop = setInterval(function () {
     game.adjust();
-    if(!game.lost) {
-      game.render();
-    }
+    if (!game.lost) game.render();
   }, 1000 / Game.Config.fps);
 };
 
@@ -38,7 +37,6 @@ Play.prototype.checkForLoss = function () {
     var play = this;
     setTimeout(function () {
       play.togglePause();
-      //so new game doesn't start out paused
       play.reset();
     }, 2000);
   }
@@ -50,7 +48,7 @@ Play.prototype.reset = function () {
   this.$el.find(".square").remove();
 
   clearInterval(this.loop);
-  new Game.Play(this.$el);
+  new Game.Play(this.$el, false);
 };
 
 Play.prototype.offBoard = function (coord) {
@@ -81,7 +79,7 @@ Play.prototype.configureKeys = function () {
   key('a', function () { game.changeDir(new Game.Coord(-1, 0)); });
   key('s', function () { game.changeDir(new Game.Coord(0, 1)); });
   key('d', function () { game.changeDir(new Game.Coord(1, 0)); });
-  key('p', function () { game.togglePause()});
+  key('p', function () { game.togglePause(); });
 };
 
 Play.prototype.changeDir = function (dir) {
