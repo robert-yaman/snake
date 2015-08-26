@@ -25,6 +25,42 @@
   right: 36px;
 }
 
+.game-over {
+  /*display: none;*/
+  position: relative;
+  text-align: center;
+  font-family: 'Roboto', sans-serif;
+  font-size: 42px;
+  top: -400px;
+  opacity: 0;
+  transition: 1.5s;
+  transition-timing-function: ease;
+}
+
+.countdown-blocks {
+  position: relative;
+  width: 72px;
+  margin: 0 auto;
+  bottom: 292px;
+}
+
+.countdown-blocks:after {
+  display:block;
+  clear: both;
+  content: "";
+}
+
+.countdown-block {
+  opacity: 0;
+  float: left;
+  background-color: blue;
+  width: 14px;
+  height: 14px;
+  margin: 5px;
+  border-radius: 4px;
+  transition: opacity 1.5s;
+}
+
 .snake {
   margin: 0;
   position: relative;
@@ -36,7 +72,7 @@
 }
 
 .snake.paused {
-  opacity: 0.3;
+  opacity: 0.2;
 }
 
 .snake:after {

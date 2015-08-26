@@ -41,6 +41,16 @@ Play.prototype.adjustCounter = function () {
   );
 };
 
+Play.prototype.blinkOut = function ($block) {
+  $block.css("background-color", "green");
+  $block.css("transition", "opacity 1s");
+  $block.one("transitionend", function() {
+    $block.css("background-color", "blue");
+    $block.css("transition", "opacity 1.5s");
+  });
+  $block.css("opacity", "0");
+};
+
 Play.prototype.checkForLoss = function () {
   if (this.board.snake.eatingSelf() || this.offBoard(this.board.snake.headPos)) { this.lossSequence(); }
 };
@@ -62,15 +72,38 @@ Play.prototype.configureKeys = function () {
 
 
 Play.prototype.lossSequence = function () {
+  //so board won't render again
   this.lost = true;
   this.togglePause();
   document.cookie = "high_score=" +
                         Math.max(this.board.snake.length(), this.highScore);
-  var play = this;
+
+  $(".game-over").css("opacity", "1").css("top", "-300px");
   setTimeout(function () {
-    play.togglePause();
-    play.reset();
-  }, 2000);
+    $(".countdown-block").css("opacity", "1");
+  }, 500);
+
+  $(".countdown-blocks").one("transitionend", function() {
+    this.blinkOut($(".countdown-blocks .block-3"));
+
+    setTimeout(function () {
+      this.blinkOut($(".countdown-blocks .block-1"));
+    }.bind(this), 1500);
+
+    setTimeout(function () {
+      this.blinkOut($(".countdown-blocks .block-2"));
+    }.bind(this), 3000);
+
+    setTimeout(function () {
+      this.togglePause();
+      this.reset();
+      $(".game-over").css("transition", "opacity .5s");
+      $(".game-over").css("opacity", "0");
+      $(".game-over").one("transitionend", function() {
+        $(".game-over").css("top", "-400px").css("transition", "1.5s");
+      });
+    }.bind(this), 4500);
+  }.bind(this));
 };
 
 Play.prototype.queueDirShift = function (dir) {
