@@ -6,6 +6,7 @@ var Game = window.Game = window.Game || {};
 var Play = Game.Play = function($el, firstGame) {
   this.$el = $el;
   this.board = new Game.Board(this.$el);
+  this.dirQueue = [];
   if (firstGame) this.configureKeys();
 
   if (document.cookie) {
@@ -26,9 +27,12 @@ Play.prototype.run = function () {
 };
 
 Play.prototype.adjust = function () {
+  this.changeDirs();
   this.board.adjust();
   this.checkForLoss();
   this.adjustCounter();
+  console.log(this.dirQueue)
+  this.alreadyChangedDirs = false;
 };
 
 Play.prototype.adjustCounter = function () {
@@ -42,6 +46,22 @@ Play.prototype.checkForLoss = function () {
   if (this.board.snake.eatingSelf() || this.offBoard(this.board.snake.headPos)) { this.lossSequence(); }
 };
 
+Play.prototype.changeDirs = function () {
+  if (this.alreadyChangedDirs || this.dirQueue.length === 0) return;
+  this.alreadyChangedDirs = true;
+  game.board.snake.changeDir(this.dirQueue.shift());
+};
+
+Play.prototype.configureKeys = function () {
+  game = this;
+  key('w', function () { game.queueDirShift(new Game.Coord(0, -1)); } );
+  key('a', function () { game.queueDirShift(new Game.Coord(-1, 0)); });
+  key('s', function () { game.queueDirShift(new Game.Coord(0, 1)); });
+  key('d', function () { game.queueDirShift(new Game.Coord(1, 0)); });
+  key('p', function () { game.togglePause(); });
+};
+
+
 Play.prototype.lossSequence = function () {
   this.lost = true;
   this.togglePause();
@@ -52,6 +72,12 @@ Play.prototype.lossSequence = function () {
     play.togglePause();
     play.reset();
   }, 2000);
+};
+
+Play.prototype.queueDirShift = function (dir) {
+  //implementing queue so that users can make moves in quick succession
+  this.dirQueue.push(dir);
+  this.changeDirs();
 };
 
 Play.prototype.reset = function () {
@@ -83,20 +109,6 @@ Play.prototype.togglePause = function () {
     clearInterval(this.loop);
     this.paused = true;
   }
-};
-
-Play.prototype.configureKeys = function () {
-  game = this;
-  key('w', function () { game.changeDir(new Game.Coord(0, -1)); } );
-  key('a', function () { game.changeDir(new Game.Coord(-1, 0)); });
-  key('s', function () { game.changeDir(new Game.Coord(0, 1)); });
-  key('d', function () { game.changeDir(new Game.Coord(1, 0)); });
-  key('p', function () { game.togglePause(); });
-};
-
-Play.prototype.changeDir = function (dir) {
-  //TODO: queue of moves to facilitate quick successive moves
-  game.board.snake.changeDir(dir);
 };
 
 })();
