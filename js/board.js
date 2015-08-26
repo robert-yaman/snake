@@ -107,7 +107,7 @@ Board.prototype.introAnimation = function () {
 };
 
 Board.prototype.lightUp = function ($element) {
-  $element.css("background-color", "yellow");
+  $element.css("background-color", "gray");
   setTimeout(function () {
     $element.css("transition", "background-color 1s, border 300ms");
     $element.css("background-color", "transparent");
