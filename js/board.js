@@ -80,38 +80,29 @@ Board.prototype.inApples = function (coord) {
 Board.prototype.introAnimation = function () {
   var board = this;
   var counter = 0;
-  var rowLength = Game.Config.boardWidth; //note: doesn't count corners
-  this.interval = setInterval( function(){
-      if (counter === 0) {
-        board.lightUp($(".stopper.corner").eq(0), counter);
-      } else if (counter < rowLength + 1) {
-        board.lightUp($(".stopper.top").eq(counter - 1));
-      } else if (counter === rowLength + 1) {
-        board.lightUp($(".stopper.corner").eq(1));
-      } else if (counter < rowLength * 2 + 2) {
-        board.lightUp($(".stopper.right").eq(counter - rowLength - 2));
-      } else if (counter === rowLength * 2 + 2) {
-        board.lightUp($(".stopper.corner").eq(3));
-      } else if (counter < rowLength * 3 + 3) {
-        board.lightUp($(".stopper.bottom").eq(2 * rowLength + 2 - counter));
-      } else if (counter === rowLength * 3 + 3) {
-        board.lightUp($(".stopper.corner").eq(2));
-      } else if (counter < rowLength * 4 + 3) {
-        board.lightUp($(".stopper.left").eq(3 * rowLength + 3 - counter));
-      } else if (counter === rowLength * 4 + 3) {
+  var rowLength = Game.Config.boardWidth;
+  this.interval = setInterval(function (){
+      if (counter < rowLength) {
+        board.lightUp($(".stopper.top").eq(counter));
+      } else if (counter < rowLength * 2) {
+        board.lightUp($(".stopper.right").eq(counter - rowLength));
+      } else if (counter < rowLength * 3) {
+        board.lightUp($(".stopper.bottom").eq(rowLength * 3 - counter - 1));
+      } else if (counter < rowLength * 4) {
+        board.lightUp($(".stopper.left").eq(rowLength * 4 - counter - 1));
+      } else {
         clearInterval(board.interval);
       }
 
       counter++;
-  }, 1);
+  }, 3);
 };
 
 Board.prototype.lightUp = function ($element) {
-  $element.css("background-color", "gray");
+  $element.addClass("intro-active");
   setTimeout(function () {
-    $element.css("transition", "background-color 1s, border 300ms");
-    $element.css("background-color", "transparent");
-  }, 200);
+    $element.removeClass("intro-active");
+  }, 300);
 };
 
 Board.prototype.makeApples = function () {

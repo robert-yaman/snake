@@ -80,6 +80,11 @@
   border-right: 1px solid black;
 }
 
+.stopper.intro-active.left {
+  border-right: 1px solid black;
+}
+
+
 .stopper.right {
   width: 15px;
   height: 16px;
@@ -87,6 +92,10 @@
 }
 
 .stopper.active.right {
+  border-left: 1px solid black;
+}
+
+.stopper.intro-active.right {
   border-left: 1px solid black;
 }
 
@@ -100,6 +109,10 @@
   border-bottom: 1px solid black;
 }
 
+.stopper.intro-active.top {
+  border-bottom: 1px solid black;
+}
+
 .stopper.bottom {
   width: 16px;
   height: 15px;
@@ -107,6 +120,10 @@
 }
 
 .stopper.active.bottom {
+  border-top: 1px solid black;
+}
+
+.stopper.intro-active.bottom {
   border-top: 1px solid black;
 }
 

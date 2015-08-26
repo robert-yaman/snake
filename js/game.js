@@ -31,7 +31,6 @@ Play.prototype.adjust = function () {
   this.board.adjust();
   this.checkForLoss();
   this.adjustCounter();
-  console.log(this.dirQueue)
   this.alreadyChangedDirs = false;
 };
 
