@@ -1,6 +1,10 @@
+html * {
+  font-family: 'Roboto', sans-serif !important;
+  font: inherit;
+}
+
 .info {
   color: #2B2B2B;
-  font-family: 'Roboto', sans-serif;
   font-weight: lighter;
 }
 
@@ -25,11 +29,49 @@
   right: 36px;
 }
 
+.me-info {
+  opacity: 0;
+  position: relative;
+  width: 350px;
+  margin: 0 auto;
+  top: -520px;
+  transition: 1.5s;
+  transition-timing-function: ease;
+}
+
+.me-info img {
+  float: left;
+  margin-right: 16px;
+  height: 150px;
+}
+
+.me-info ul {
+  list-style: none;
+}
+
+.me-info h2 {
+  font-size: 24px;
+  margin-bottom: 0;
+}
+
+.me-info p {
+  margin-top: 0;
+}
+
+.me-info .bullet-block {
+  display: inline-block;
+  background-color: purple;
+  width: 14px;
+  height: 14px;
+  border-radius: 4px;
+  margin-top: 8px;
+  margin-right: 4px;
+}
+
 .game-over {
   /*display: none;*/
   position: relative;
   text-align: center;
-  font-family: 'Roboto', sans-serif;
   font-size: 42px;
   top: -400px;
   opacity: 0;

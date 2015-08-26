@@ -136,10 +136,19 @@ Play.prototype.togglePause = function () {
     this.$el.removeClass("paused");
     this.run();
     this.paused = false;
+    if (!this.lost) {
+      $(".me-info").css("transition", ".5s").css("opacity", "0");
+      $(".me-info").one("transitionend", function() {
+        $(".me-info").css("transition", "1.5s").css("top", "-520px");
+      });
+    }
   } else {
     this.$el.addClass("paused");
     clearInterval(this.loop);
     this.paused = true;
+    if (!this.lost) {
+      $(".me-info").css("opacity", "1").css("top", "-420px");
+    }
   }
 };
 
