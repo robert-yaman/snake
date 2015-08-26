@@ -3,9 +3,12 @@
 var Game = window.Game = window.Game || {};
 
 Game.Snake = function() {
-  this.headPos = new Coord(1,1);
-  this.currentDir = new Coord(0,1);
-  this.segments = [this.headPos, new Coord(2,1), new Coord(3,1)];
+  this.headPos = new Coord(
+    Math.floor(Game.Config.boardWidth / 2),
+    Math.floor(Game.Config.boardHeight / 2)
+  );
+  this.currentDir = new Coord(1,0);
+  this.segments = [this.headPos, this.headPos.minus(this.currentDir), this.headPos.minus(this.currentDir).plus(this.currentDir)];
 };
 
 var Snake = Game.Snake;
@@ -20,12 +23,16 @@ Coord.prototype.eq = function (otherCoord) {
   return this.pos[0] === otherCoord.pos[0] && this.pos[1] === otherCoord.pos[1];
 };
 
-Coord.prototype.plus = function (otherCoord) {
-  return new Coord(this.pos[0] + otherCoord.pos[0], this.pos[1] + otherCoord.pos[1]);
+Coord.prototype.inverse = function (otherCoord) {
+  return this.pos[0] === -1 * otherCoord.pos[0] && this.pos[1] === - 1 * otherCoord.pos[1];
 };
 
-Coord.prototype.inverse = function (otherCoord) {
-  return this.pos[0] === -1 * otherCoord.pos[0] && this.pos[1] === -1 * otherCoord.pos[1];
+Coord.prototype.minus = function (otherCoord) {
+  return new Coord(this.pos[0] - otherCoord.pos[0], this.pos[1] - otherCoord.pos[1]);
+};
+
+Coord.prototype.plus = function (otherCoord) {
+  return new Coord(this.pos[0] + otherCoord.pos[0], this.pos[1] + otherCoord.pos[1]);
 };
 
 
