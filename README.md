@@ -1,6 +1,6 @@
 #SNAKE
 
-[Live](robert-yaman.github.io/snake)
+[Live](http://www.robertyaman.co/snake/)
 
 ## About
 
