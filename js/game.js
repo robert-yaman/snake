@@ -2,7 +2,6 @@
 
 var Game = window.Game = window.Game || {};
 
-
 var Play = Game.Play = function($el, firstGame) {
   this.$el = $el;
   this.board = new Game.Board(this.$el);
@@ -14,10 +13,15 @@ var Play = Game.Play = function($el, firstGame) {
   } else {
     this.highScore = 3;
   }
-  this.run();
+  $("#start-button").click(function () {
+    $(".info").css("display", "block");
+    $("#start-button").remove();
+    this.run();
+  }.bind(this));
 };
 
 Play.prototype.run = function () {
+  this.board.introAnimation();
   Game.play = this;
   game = this;
   this.loop = setInterval(function () {
@@ -118,7 +122,8 @@ Play.prototype.reset = function () {
   this.$el.find(".square").remove();
 
   clearInterval(this.loop);
-  new Game.Play(this.$el, false);
+  newGame = new Game.Play(this.$el, false);
+  newGame.run();
 };
 
 Play.prototype.offBoard = function (coord) {

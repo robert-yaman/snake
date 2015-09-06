@@ -8,7 +8,7 @@ Game.Board = function($el) {
   this.divs = [];
   this.apples = [];
   this.makeGrid();
-  this.introAnimation();
+  // this.introAnimation();
 };
 
 var Board = Game.Board;
