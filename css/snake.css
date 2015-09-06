@@ -18,6 +18,10 @@ html * {
   z-index: 1;
 }
 
+#start-button:focus {
+  outline: 0;
+}
+
 .info {
   color: #2B2B2B;
   font-weight: lighter;
